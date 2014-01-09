@@ -3,7 +3,7 @@
 #
 #  obvestila.py - Python script that checks for and shows new articles on Ubuntu.si
 #  
-#  Copyright 2013 Drazen M. <drazen@ubuntu.si>
+#  Author: Drazen M. <drazen@ubuntu.si>
 #  Idea by dz0ny
 #  
 #  This program is free software; you can redistribute it and/or modify
