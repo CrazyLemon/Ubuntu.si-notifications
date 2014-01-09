@@ -1,0 +1,63 @@
+#!/bin/bash
+# Author: Drazen M. <drazen@ubuntu.si>
+#
+# Script is used to generate .desktop file for a python script
+# and add it to ~/.configure/autostart folder.
+# It also moves python script and PNG file to its location
+# Check python script for more details of what it does.
+#
+
+DESKTOP_FOLDER="$HOME""/.config/autostart/"
+DESKTOP_FILE="$DESKTOP_FOLDER""UbuntuSiObvestila.desktop"
+OUR_HOME="$HOME""/.UbuntuSi/"
+PYTHON_FILE="obvestila.py"
+ICON="ubuntusi.png"
+
+#Precheck
+if [[ $(whoami) = "root" ]]; then
+	echo "Are you f..ing serious? Exiting..."
+	exit
+fi
+if [[ ! -f "$ICON" ]]; then
+	echo "Manjka $ICON! Koncujem ... "
+	exit
+fi
+
+if [[ ! -f "$PYTHON_FILE" ]]; then
+	echo "Manjka $PYTHON_FILE ! Koncujem ..."
+	exit
+fi
+
+#If folders dont exist we make them
+if [[ ! -d "$OUR_HOME" ]]; then
+	mkdir -p "$OUR_HOME"
+fi
+
+if [[ ! -d "$DESKTOP_FOLDER" ]]; then
+	mkdir -p "$DESKTOP_FOLDER"
+fi
+
+#Move our files to "OUR HOME" folder
+chmod +x "$PYTHON_FILE"
+mv $(pwd)"/$PYTHON_FILE" "$OUR_HOME"
+mv $(pwd)"/$ICON" "$OUR_HOME"
+
+#Create .desktop file for autostart purposes
+echo "[Desktop Entry]" > "$DESKTOP_FILE"
+echo "Type=Application" >> "$DESKTOP_FILE"
+echo "Exec=/usr/bin/python $OUR_HOME$PYTHON_FILE" >> "$DESKTOP_FILE"
+echo "X-GNOME-Autostart-enabled=true" >> "$DESKTOP_FILE"
+echo "Comment=Obvestila o novicah Ubuntu Slovenije" >> "$DESKTOP_FILE"
+echo "Name=Obvestila Ubuntu Slovenije" >> "$DESKTOP_FILE"
+echo "Icon=$OUR_HOME$ICON" >> "$DESKTOP_FILE"
+
+#Start script
+/usr/bin/python "$OUR_HOME""$PYTHON_FILE"
+echo "Novica se bo prikazala čez 30s."
+
+#Send user notice about configuration location
+echo "Tako $PYTHON_FILE kot $ICON se nahajata v $OUR_HOME"
+echo "----------------------------------------------------------------"
+echo "Hvala, ker ste namestili Ubuntu.si obvestila!"
+echo "V primeru tezav se obrnite na www.ubuntu.si/forum"
+echo "Lep pozdrav :-)"
