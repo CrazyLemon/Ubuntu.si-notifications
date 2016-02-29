@@ -37,6 +37,13 @@ if [[ ! -d "$DESKTOP_FOLDER" ]]; then
 	mkdir -p "$DESKTOP_FOLDER"
 fi
 
+#We need to install python-notify2 for our python script to work properly
+if [ $(dpkg-query -W -f='${Status}' python-notify2 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+	echo "Potrebno je namestiti python-notify2; namescam ..."
+  sudo apt-get --force-yes --yes install python-notify2
+fi
+
 #Move our files to "OUR HOME" folder
 chmod +x "$PYTHON_FILE"
 mv $(pwd)"/$PYTHON_FILE" "$OUR_HOME"
