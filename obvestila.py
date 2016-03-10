@@ -26,8 +26,9 @@
 #      with os.system("command")
 #      -> Add notifications into Ubuntu's messaging menu
 
-
-import notify2, sys, os.path, requests, threading, time
+from __future__ import absolute_import
+from __future__ import print_function
+import notify2, sys, os.path, requests, threading, time, six
 
 if __name__ == '__main__':
 
@@ -59,7 +60,7 @@ if __name__ == '__main__':
 				self._finished.wait(self._interval)
 
 		def homepath(path):
-			return unicode(os.path.expandvars(path), sys.getdefaultencoding())
+			return six.text_type(os.path.expandvars(path), sys.getdefaultencoding())
 
 		def notifications(category,author,title):
 			# sleep is necessary if we use autologin and we do not want to miss notifications
@@ -70,17 +71,17 @@ if __name__ == '__main__':
 				sys.exit(1)
 
 			icon = homepath('$HOME/.UbuntuSi/ubuntusi.png')
-			msg = category+ " - " + author
+			msg = category + " - " + author
 			# check if there's an icon and if not just send notifications without
 			if ( os.path.exists(icon) ) :
 				n = notify2.Notification(msg, title, icon)
 				if not n.show():
-					print "Napaka pri posiljanju obvestil"
+					print("Napaka pri posiljanju obvestil")
 					sys.exit(1)
 			else :
 				n = notify2.Notification(msg, title)
 				if not n.show():
-					print "Napaka pri posiljanju obvestil"
+					print("Napaka pri posiljanju obvestil")
 					sys.exit(1)
 
 		def task(self):
