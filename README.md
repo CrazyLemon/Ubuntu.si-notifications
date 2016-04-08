@@ -1,4 +1,4 @@
-##### Author: Drazen M. <drazen@ubuntu.si>
+##### Author: Drazen M. <drazen AT ubuntu.si>
 
 For this script to work you should receive 3 files in archive. Well 4 if i'm counting this README.
 The script has been tested on Ubuntu 12.04 LTS and on 12.10.
