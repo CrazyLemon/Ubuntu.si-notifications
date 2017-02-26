@@ -24,11 +24,16 @@
 #       MAYBETODO LIST
 #      -> Check whether screen is locked or not by running 'gnome-screensaver-command -q |grep "is active"
 #      with os.system("command")
+#      -> Check whether monitor is on or off (xset -q doesn't help in this case because it always reports "Monitor is on")
 #      -> Add notifications into Ubuntu's messaging menu
 
 from __future__ import absolute_import
 from __future__ import print_function
 import notify2, sys, os.path, requests, threading, time, six
+
+#disable https warnings about insecure request
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 if __name__ == '__main__':
 
